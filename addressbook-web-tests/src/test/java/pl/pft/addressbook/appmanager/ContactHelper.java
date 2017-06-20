@@ -29,4 +29,10 @@ public class ContactHelper extends HelperBase{
     click(By.xpath("//input[contains(@value, 'DELETE')]"));
     allertAccept();
   }
+
+  public void initContactModification() {
+    click(By.xpath("//img[contains(@title, 'EDIT')]"));
+  }
+
+  public void submitContactModification() { click(By.name("update")); }
 }
