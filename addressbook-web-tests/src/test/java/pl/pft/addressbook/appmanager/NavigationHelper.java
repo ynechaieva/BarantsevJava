@@ -3,9 +3,7 @@ package pl.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-/**
- * Created by ynech on 20/06/2017.
- */
+
 public class NavigationHelper extends HelperBase{
 
   public NavigationHelper(FirefoxDriver wd){
@@ -15,4 +13,9 @@ public class NavigationHelper extends HelperBase{
   public void gotoGroupPage() {
     click(By.linkText("GROUPS"));
   }
+
+  public void gotoContactPage(){click(By.linkText("ADD_NEW"));}
+
+  public void gotoHomePage(){click(By.linkText("HOME"));}
+
 }

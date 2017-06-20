@@ -2,9 +2,7 @@ package pl.pft.addressbook.tests;
 
 import org.testng.annotations.Test;
 
-/**
- * Created by ynech on 19/06/2017.
- */
+
 public class GroupDeletionTests extends TestBase{
 
   @Test
