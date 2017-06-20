@@ -1,4 +1,4 @@
-package pl.pft.addressbook;
+package pl.pft.addressbook.model;
 
 /**
  * Created by ynech on 18/06/2017.
