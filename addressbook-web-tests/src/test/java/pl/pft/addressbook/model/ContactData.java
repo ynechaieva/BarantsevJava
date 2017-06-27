@@ -1,5 +1,7 @@
 package pl.pft.addressbook.model;
 
+import pl.pft.addressbook.appmanager.ContactHelper;
+
 /**
  * Created by ynech on 18/06/2017.
  */
@@ -29,6 +31,12 @@ public class ContactData {
     this.lastName = lastName;
     this.email = email;
     this.group = group;
+  }
+
+  public ContactData(String firstName, String lastName, String email){
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
   }
 
   public void setFirstName(String firstName){
