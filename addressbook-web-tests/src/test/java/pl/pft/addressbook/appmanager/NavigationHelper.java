@@ -12,11 +12,31 @@ public class NavigationHelper extends HelperBase{
   }
 
   public void gotoGroupPage() {
-    click(By.linkText("GROUPS"));
+    if(isElementPresent(By.tagName("h1"))
+            && wd.findElement(By.tagName("h1")).getText().equals("Groups")
+            && isElementPresent(By.name("new"))){
+      return;
+    } else{
+      click(By.linkText("GROUPS"));
+    }
   }
 
-  public void gotoContactPage(){click(By.linkText("ADD_NEW"));}
+  public void gotoContactPage(){
+    if(isElementPresent(By.tagName("h1"))
+            && wd.findElement(By.tagName("h1")).getText().equals("EDIT_ADD_ENTRY")
+            && (isElementPresent(By.name("submit")) && wd.findElement(By.name("submit")).getText().equals("ENTER"))){
+      return;
+    } else{
+      click(By.linkText("ADD_NEW"));
+    }
+  }
 
-  public void gotoHomePage(){click(By.linkText("HOME"));}
+  public void gotoHomePage() {
+    if (isElementPresent(By.id("mainTable"))) {
+      return;
+    } else {
+      click(By.linkText("HOME"));
+    }
+  }
 
 }

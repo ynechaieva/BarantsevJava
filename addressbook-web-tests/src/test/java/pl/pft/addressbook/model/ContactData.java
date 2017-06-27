@@ -22,11 +22,13 @@ public class ContactData {
   private int bDay;
   private int bMonth;
   private int bYear;
+  private String group;
 
-  public ContactData(String firstName, String lastName, String email){
+  public ContactData(String firstName, String lastName, String email, String group){
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
+    this.group = group;
   }
 
   public void setFirstName(String firstName){
@@ -101,6 +103,8 @@ public class ContactData {
     this.bYear = bYear;
   }
 
+  public void setGroup(String group) { this.group = group; }
+
   public String getFirstName(){return this.firstName;}
   public String getMiddleName(){return this.middleName;}
   public String getLastName(){return this.lastName;}
@@ -119,4 +123,5 @@ public class ContactData {
   public int getbDay(){return this.bDay;}
   public int getbMonth(){return this.bMonth;}
   public int getbYear(){return this.bYear;}
+  public String getGroup(){return this.group;}
 }
