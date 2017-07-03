@@ -22,6 +22,7 @@ public class ContactHelper extends HelperBase{
   public void gotoContactHomePage(){
     click(By.linkText("home page"));
   }
+  public void gotoContactHomePageAfterDeletiob() {click(By.linkText("HOME"));}
 
   public void fillContactForm(ContactData contact, boolean creation){
     type(By.name("firstname"), contact.getFirstName());
