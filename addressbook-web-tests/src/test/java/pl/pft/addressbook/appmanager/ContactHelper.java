@@ -40,8 +40,13 @@ public class ContactHelper extends HelperBase{
     click(By.name("submit"));
   }
 
-  public void selectContact(){
-    click(By.name("selected[]"));
+  public void selectContact(int index){
+    wd.findElements(By.name("selected[]")).get(index).click();
+  }
+
+  public String getContactByIndex(int index) {
+    String id = wd.findElements(By.name("selected[]")).get(index).getAttribute("id");
+    return id;
   }
 
   public void deleteSelectedContact(){
@@ -49,8 +54,11 @@ public class ContactHelper extends HelperBase{
     allertAccept();
   }
 
-  public void initContactModification() {
-    click(By.xpath("//img[contains(@title, 'EDIT')]"));
+  public void initContactModification(int index) {
+
+    selectContact(index);
+    String id = getContactByIndex(index);
+    click(By.xpath("//a[contains(@href,'id=" + id +"')]/img[contains(@title, 'EDIT')]"));
   }
 
   public void submitContactModification() { click(By.name("update")); }
