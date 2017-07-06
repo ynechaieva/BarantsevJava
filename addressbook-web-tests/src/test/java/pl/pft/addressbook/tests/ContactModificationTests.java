@@ -5,6 +5,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.pft.addressbook.model.ContactData;
 
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+
 public class ContactModificationTests extends TestBase{
 
   @Test
@@ -13,12 +17,20 @@ public class ContactModificationTests extends TestBase{
     if(!app.getContactHelper().isThereAContact()){
       app.getContactHelper().createContact(new ContactData("tmp", "tmp", "tmp@email.address", "[none]"), true);
     }
-    int before = app.getContactHelper().getContactsCount();
-    app.getContactHelper().initContactModification(before - 1);
-    app.getContactHelper().fillContactForm(new ContactData("Contact: updated", "testUser1_LN", "testUser1@email.address", null), false);
+    List<ContactData> beforeList = app.getContactHelper().getContactList();
+    app.getContactHelper().initContactModification(beforeList.size() - 1);
+    ContactData newcontact = new ContactData(beforeList.get(beforeList.size() - 1).getId(), "testUser3_LN", "testUser13email.address", null, null);
+    app.getContactHelper().fillContactForm(newcontact, false);
     app.getContactHelper().submitContactModification();
     app.getContactHelper().gotoContactHomePage();
-    int after = app.getContactHelper().getContactsCount();
-    Assert.assertEquals(after, before);
+    List<ContactData> afterList = app.getContactHelper().getContactList();
+    Assert.assertEquals(afterList.size(), beforeList.size());
+
+    beforeList.remove(beforeList.size() - 1);
+    beforeList.add(newcontact);
+    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+    beforeList.sort(byId);
+    afterList.sort(byId);
+    Assert.assertEquals(afterList, beforeList);
   }
 }

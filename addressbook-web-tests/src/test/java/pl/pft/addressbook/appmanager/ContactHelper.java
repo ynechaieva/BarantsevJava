@@ -2,11 +2,13 @@ package pl.pft.addressbook.appmanager;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import pl.pft.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ContactHelper extends HelperBase{
@@ -44,7 +46,7 @@ public class ContactHelper extends HelperBase{
     wd.findElements(By.name("selected[]")).get(index).click();
   }
 
-  public String getContactByIndex(int index) {
+  public String getContactIdByIndex(int index) {
     String id = wd.findElements(By.name("selected[]")).get(index).getAttribute("id");
     return id;
   }
@@ -57,7 +59,7 @@ public class ContactHelper extends HelperBase{
   public void initContactModification(int index) {
 
     selectContact(index);
-    String id = getContactByIndex(index);
+    String id = getContactIdByIndex(index);
     click(By.xpath("//a[contains(@href,'id=" + id +"')]/img[contains(@title, 'EDIT')]"));
   }
 
@@ -76,5 +78,23 @@ public class ContactHelper extends HelperBase{
 
   public int getContactsCount() {
    return  wd.findElements(By.name("selected[]")).size();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<ContactData>();
+    //int rowCount = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[@name='entry'")).size();
+    //int columnCount = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[@name='entry']/td")).size();
+    List<WebElement> trElements = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[@name='entry']"));
+
+    for(WebElement trElement : trElements) {
+      List<WebElement> tdElements = trElement.findElements(By.tagName("td"));
+      int id = Integer.parseInt(tdElements.get(0).findElement(By.tagName("input")).getAttribute("value"));
+      String lastname = tdElements.get(1).getText();
+      String firstname = tdElements.get(2).getText();
+
+      ContactData contact = new ContactData(id, firstname, lastname, null, null);
+      contacts.add(contact);
+    }
+    return contacts;
   }
 }

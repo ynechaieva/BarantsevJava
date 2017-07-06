@@ -6,6 +6,7 @@ import pl.pft.addressbook.appmanager.ContactHelper;
  * Created by ynech on 18/06/2017.
  */
 public class ContactData {
+  private int id;
   private String firstName;
   private String middleName;
   private String lastName;
@@ -26,17 +27,25 @@ public class ContactData {
   private int bYear;
   private String group;
 
-  public ContactData(String firstName, String lastName, String email, String group){
+
+    public ContactData(String firstName, String lastName, String email, String group){
+    this.id = Integer.MAX_VALUE;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.group = group;
   }
 
-  public ContactData(String firstName, String lastName, String email){
+  public ContactData(int id, String firstName, String lastName, String email, String group){
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
+    this.group = group;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public void setFirstName(String firstName){
@@ -113,6 +122,37 @@ public class ContactData {
 
   public void setGroup(String group) { this.group = group; }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ContactData that = (ContactData) o;
+
+    if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+    return lastName != null ? lastName.equals(that.lastName) : that.lastName == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = firstName != null ? firstName.hashCode() : 0;
+    result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            '}';
+  }
+
+  public int getId() {
+    return id;
+  }
+
   public String getFirstName(){return this.firstName;}
   public String getMiddleName(){return this.middleName;}
   public String getLastName(){return this.lastName;}
@@ -132,4 +172,5 @@ public class ContactData {
   public int getbMonth(){return this.bMonth;}
   public int getbYear(){return this.bYear;}
   public String getGroup(){return this.group;}
+
 }
