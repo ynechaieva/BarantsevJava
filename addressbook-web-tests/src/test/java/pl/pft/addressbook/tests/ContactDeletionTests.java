@@ -5,14 +5,13 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.pft.addressbook.model.ContactData;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
 
-  @Test
+  @Test (enabled = false)
   public void testContactDeletion(){
-    app.getNavigationHelper().gotoHomePage();
+    app.goTo().gotoHomePage();
     if( ! app.getContactHelper().isThereAContact()){
       app.getContactHelper().createContact(new ContactData("tmp", "tmp", "tmp@email.address", "[none]"), true);
     }
