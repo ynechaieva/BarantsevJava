@@ -90,8 +90,14 @@ public class ContactHelper extends HelperBase{
    return  wd.findElements(By.name("selected[]")).size();
   }
 
+  private Contacts contactCache = null;
+
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    if( contactCache != null ) {
+      return new Contacts(contactCache);
+    }
+
+    contactCache = new Contacts();
     List<WebElement> trElements = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[@name='entry']"));
 
     for(WebElement trElement : trElements) {
@@ -99,8 +105,8 @@ public class ContactHelper extends HelperBase{
       int id = Integer.parseInt(tdElements.get(0).findElement(By.tagName("input")).getAttribute("value"));
       String lastname = tdElements.get(1).getText();
       String firstname = tdElements.get(2).getText();
-      contacts.add(new ContactData().withId(id).withFirstName(firstname).withhLastName(lastname));
+      contactCache.add(new ContactData().withId(id).withFirstName(firstname).withhLastName(lastname));
     }
-    return contacts;
+    return new Contacts(contactCache);
   }
 }
