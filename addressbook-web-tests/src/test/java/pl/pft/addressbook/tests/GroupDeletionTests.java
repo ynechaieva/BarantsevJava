@@ -4,8 +4,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pl.pft.addressbook.model.GroupData;
-
-import java.util.List;
+import pl.pft.addressbook.model.Groups;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 
 public class GroupDeletionTests extends TestBase{
@@ -13,7 +14,7 @@ public class GroupDeletionTests extends TestBase{
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().GroupPage();
-    if(app.group().list().size() == 0){
+    if(app.group().all().size() == 0){
       app.group().create(new GroupData().withName("test3"));
     }
   }
@@ -21,14 +22,14 @@ public class GroupDeletionTests extends TestBase{
   @Test
   public void testGroupDeletion(){
 
-    List<GroupData> beforeList = app.group().list();
-    int index = beforeList.size() - 1;
-    app.group().delete(index);
-    List<GroupData> afterList = app.group().list();
-    Assert.assertEquals(afterList.size(), beforeList.size() - 1);
+    Groups beforeList = app.group().all();
+    GroupData deletedGroup = beforeList.iterator().next();
+    app.group().delete(deletedGroup);
+    Groups afterList = app.group().all();
 
-    beforeList.remove(index);
-    Assert.assertEquals(afterList, beforeList);
+    assertThat(afterList.size(), equalTo(beforeList.size() - 1));
+    assertThat(afterList, equalTo(beforeList.without(deletedGroup)));
+
   }
 
 

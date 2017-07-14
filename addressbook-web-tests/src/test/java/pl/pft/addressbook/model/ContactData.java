@@ -6,7 +6,7 @@ import pl.pft.addressbook.appmanager.ContactHelper;
  * Created by ynech on 18/06/2017.
  */
 public class ContactData {
-  private int id;
+  private int id = Integer.MAX_VALUE;
   private String firstName;
   private String middleName;
   private String lastName;
@@ -27,100 +27,128 @@ public class ContactData {
   private int bYear;
   private String group;
 
-
-    public ContactData(String firstName, String lastName, String email, String group){
-    this.id = Integer.MAX_VALUE;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.group = group;
-  }
-
-  public ContactData(int id, String firstName, String lastName, String email, String group){
+  public ContactData withId(int id) {
     this.id = id;
+    return this;
+  }
+
+  public ContactData withFirstName(String firstName){
     this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.group = group;
+    return this;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public void setFirstName(String firstName){
-    this.firstName = firstName;
-  }
-
-  public void setMiddleName(String middleName){
+  public ContactData withMiddleName(String middleName){
     this.middleName = middleName;
+    return this;
   }
 
-  public void setLastName(String lastName){
+  public ContactData withhLastName(String lastName){
     this.lastName = lastName;
+    return this;
   }
 
-  public void setNickname(String nickname){
+  public ContactData withNickname(String nickname){
     this.nickname = nickname;
+    return this;
   }
 
-  public void setTitle(String title){
+  public ContactData withTitle(String title){
     this.title = title;
+    return this;
   }
 
-  public void setCompany(String company){
+  public ContactData withCompany(String company){
     this.company = company;
+    return this;
   }
 
-  public void setAddress(String address){
+  public ContactData withAddress(String address){
     this.address = address;
+    return this;
   }
 
-  public void setHomePhone(String homePhone){
+  public ContactData withHomePhone(String homePhone){
     this.homePhone = homePhone;
+    return this;
   }
 
-  public void setMobilePhone(String mobilePhone){
+  public ContactData withMobilePhone(String mobilePhone){
     this.mobilePhone = mobilePhone;
+    return this;
   }
 
-  public void setWorkPhone(String workPhone){
+  public ContactData withWorkPhone(String workPhone){
     this.workPhone = workPhone;
+    return this;
   }
 
-  public void setFax(String fax){
+  public ContactData withFax(String fax){
     this.fax = fax;
+    return this;
   }
 
-  public void setEmail(String email){
+  public ContactData withEmail(String email){
     this.email = email;
+    return this;
   }
 
-  public void setEmail2(String email2){
+  public ContactData withEmail2(String email2){
     this.email2 = email2;
+    return this;
   }
 
-  public void setEmail3(String email3){
+  public ContactData withEmail3(String email3){
     this.email3 = email3;
+    return this;
   }
 
-  public void setHomepage(String homepage){
+  public ContactData withHomepage(String homepage){
     this.homepage = homepage;
+    return this;
   }
 
-  public void setbDay(int bDay){
+  public ContactData withbDay(int bDay){
     this.bDay = bDay;
+    return this;
   }
 
-  public void setbMonth(int bMonth){
+  public ContactData withbMonth(int bMonth){
     this.bMonth = bMonth;
+    return this;
   }
 
-  public void setbYear(int bYear){
+  public ContactData withbYear(int bYear){
     this.bYear = bYear;
+    return this;
   }
 
-  public void setGroup(String group) { this.group = group; }
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
+  }
+
+  public int getId() {
+    return id;
+  }
+  public String getFirstName(){return this.firstName;}
+  public String getMiddleName(){return this.middleName;}
+  public String getLastName(){return this.lastName;}
+  public String getNickname(){return this.nickname;}
+  public String getTitle(){return this.title;}
+  public String getCompany(){return this.company;}
+  public String getAddress(){return this.address;}
+  public String getHomePhone(){return this.homePhone;}
+  public String getMobilePhone(){return this.mobilePhone;}
+  public String getWorkPhone(){return this.workPhone;}
+  public String getFax(){return this.fax;}
+  public String getEmail(){return this.email;}
+  public String getEmail2(){return this.email2;}
+  public String getEmail3(){return this.email3;}
+  public String getHomepage(){return this.homepage;}
+  public int getbDay(){return this.bDay;}
+  public int getbMonth(){return this.bMonth;}
+  public int getbYear(){return this.bYear;}
+  public String getGroup(){return this.group;}
 
   @Override
   public boolean equals(Object o) {
@@ -148,29 +176,5 @@ public class ContactData {
             ", lastName='" + lastName + '\'' +
             '}';
   }
-
-  public int getId() {
-    return id;
-  }
-
-  public String getFirstName(){return this.firstName;}
-  public String getMiddleName(){return this.middleName;}
-  public String getLastName(){return this.lastName;}
-  public String getNickname(){return this.nickname;}
-  public String getTitle(){return this.title;}
-  public String getCompany(){return this.company;}
-  public String getAddress(){return this.address;}
-  public String getHomePhone(){return this.homePhone;}
-  public String getMobilePhone(){return this.mobilePhone;}
-  public String getWorkPhone(){return this.workPhone;}
-  public String getFax(){return this.fax;}
-  public String getEmail(){return this.email;}
-  public String getEmail2(){return this.email2;}
-  public String getEmail3(){return this.email3;}
-  public String getHomepage(){return this.homepage;}
-  public int getbDay(){return this.bDay;}
-  public int getbMonth(){return this.bMonth;}
-  public int getbYear(){return this.bYear;}
-  public String getGroup(){return this.group;}
 
 }

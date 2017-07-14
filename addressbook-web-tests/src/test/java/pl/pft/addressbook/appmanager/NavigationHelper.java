@@ -31,7 +31,7 @@ public class NavigationHelper extends HelperBase{
     }
   }
 
-  public void gotoHomePage() {
+  public void HomePage() {
     if (isElementPresent(By.id("mainTable"))) {
       return;
     } else {

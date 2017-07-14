@@ -1,11 +1,10 @@
 package pl.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.pft.addressbook.model.GroupData;
-
-import java.util.Comparator;
-import java.util.List;
+import pl.pft.addressbook.model.Groups;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 public class GroupCreationTests extends TestBase{
 
@@ -13,18 +12,13 @@ public class GroupCreationTests extends TestBase{
   public void testGroupCreation() {
 
     app.goTo().GroupPage();
-    List<GroupData> beforeList = app.group().list();
+    Groups beforeList = app.group().all();
     GroupData newgroup = new GroupData().withName("test2");
     app.group().create(newgroup);
-    List<GroupData> afterList = app.group().list();
-    Assert.assertEquals(afterList.size(), beforeList.size() + 1);
+    Groups afterList = app.group().all();
 
-    //newgroup.setId(afterList.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
-    beforeList.add(newgroup);
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    beforeList.sort(byId);
-    afterList.sort(byId);
-    Assert.assertEquals(afterList, beforeList);
+    assertThat(afterList.size(), equalTo(beforeList.size() + 1));
+    assertThat(afterList, equalTo(beforeList.withAdded(newgroup.withId(afterList.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
 
 }

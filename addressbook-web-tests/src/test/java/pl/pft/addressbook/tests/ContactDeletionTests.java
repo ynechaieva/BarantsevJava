@@ -2,27 +2,35 @@ package pl.pft.addressbook.tests;
 
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pl.pft.addressbook.model.ContactData;
+import pl.pft.addressbook.model.Contacts;
 
-import java.util.List;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
+import java.util.Set;
 
 public class ContactDeletionTests extends TestBase {
 
-  @Test (enabled = false)
-  public void testContactDeletion(){
-    app.goTo().gotoHomePage();
-    if( ! app.getContactHelper().isThereAContact()){
-      app.getContactHelper().createContact(new ContactData("tmp", "tmp", "tmp@email.address", "[none]"), true);
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().HomePage();
+    if(app.contact().all().size() == 0){
+      app.contact().create(new ContactData().withFirstName("tmp").withhLastName("tmp").withEmail("tmp@email.address").withGroup("[none]"), true);
     }
-    List<ContactData> beforeList = app.getContactHelper().getContactList();
-    app.getContactHelper().selectContact(beforeList.size() - 1);
-    app.getContactHelper().deleteSelectedContact();
-    app.getContactHelper().gotoContactHomePageAfterDeletion();
-    List<ContactData> afterList = app.getContactHelper().getContactList();
-    Assert.assertEquals(afterList.size(), beforeList.size() - 1);
-
-    beforeList.remove(beforeList.size() - 1);
-    Assert.assertEquals(afterList, beforeList);
   }
+
+  @Test (enabled = true)
+  public void testContactDeletion(){
+
+    Contacts beforeList = app.contact().all();
+    ContactData deletedContact = beforeList.iterator().next();
+    app.contact().delete(deletedContact);
+    Contacts afterList = app.contact().all();
+
+    assertThat(afterList.size(), equalTo(beforeList.size() - 1));
+    assertThat(afterList, equalTo(beforeList.without(deletedContact)));
+  }
+
 }
