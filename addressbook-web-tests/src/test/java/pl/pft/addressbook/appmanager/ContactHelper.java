@@ -66,12 +66,14 @@ public class ContactHelper extends HelperBase{
     initContactCreation();
     fillContactForm(contact, creation);
     submitContactCreation();
+    contactCache = null;
     gotoContactHomePage();
   }
 
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     deleteSelectedContact();
+    contactCache = null;
     gotoContactHomePageAfterDeletion();
   }
 
@@ -79,6 +81,7 @@ public class ContactHelper extends HelperBase{
     initContactModification(contact.getId());
     fillContactForm(contact, false);
     submitContactModification();
+    contactCache = null;
     gotoContactHomePage();
   }
 
@@ -86,8 +89,8 @@ public class ContactHelper extends HelperBase{
     return isElementPresent(By.name("selected[]"));
   }
 
-  public int getContactsCount() {
-   return  wd.findElements(By.name("selected[]")).size();
+  public int count() {
+   return  wd.findElements(By.xpath(".//input[@name='selected[]']")).size();
   }
 
   private Contacts contactCache = null;
@@ -99,8 +102,7 @@ public class ContactHelper extends HelperBase{
 
     contactCache = new Contacts();
     List<WebElement> trElements = wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[@name='entry']"));
-
-    for(WebElement trElement : trElements) {
+    for( WebElement trElement : trElements ) {
       List<WebElement> tdElements = trElement.findElements(By.tagName("td"));
       int id = Integer.parseInt(tdElements.get(0).findElement(By.tagName("input")).getAttribute("value"));
       String lastname = tdElements.get(1).getText();
