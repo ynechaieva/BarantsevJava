@@ -1,10 +1,6 @@
 package pl.pft.addressbook.model;
 
-import pl.pft.addressbook.appmanager.ContactHelper;
 
-/**
- * Created by ynech on 18/06/2017.
- */
 public class ContactData {
   private int id = Integer.MAX_VALUE;
   private String firstName;
@@ -17,10 +13,12 @@ public class ContactData {
   private String homePhone;
   private String mobilePhone;
   private String workPhone;
+  private String allPhones;
   private String fax;
   private String email;
   private String email2;
   private String email3;
+  private String allEmails;
   private String homepage;
   private int bDay;
   private int bMonth;
@@ -82,6 +80,11 @@ public class ContactData {
     return this;
   }
 
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
+  }
+
   public ContactData withFax(String fax){
     this.fax = fax;
     return this;
@@ -99,6 +102,11 @@ public class ContactData {
 
   public ContactData withEmail3(String email3){
     this.email3 = email3;
+    return this;
+  }
+
+  public ContactData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
     return this;
   }
 
@@ -140,10 +148,12 @@ public class ContactData {
   public String getHomePhone(){return this.homePhone;}
   public String getMobilePhone(){return this.mobilePhone;}
   public String getWorkPhone(){return this.workPhone;}
+  public String getAllPhones() { return allPhones; }
   public String getFax(){return this.fax;}
   public String getEmail(){return this.email;}
   public String getEmail2(){return this.email2;}
   public String getEmail3(){return this.email3;}
+  public String getAllEmails() { return allEmails; }
   public String getHomepage(){return this.homepage;}
   public int getbDay(){return this.bDay;}
   public int getbMonth(){return this.bMonth;}
