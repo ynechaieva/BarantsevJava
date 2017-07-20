@@ -1,0 +1,22 @@
+[
+  {
+    "firstName": "first name 0",
+    "lastName": "last name 0",
+    "address": "address 0",
+    "mobilePhone": "(80) 000 000 00",
+    "email": "email 0",
+    "bDay": 0,
+    "bMonth": 0,
+    "bYear": 0
+  },
+  {
+    "firstName": "first name 1",
+    "lastName": "last name 1",
+    "address": "address 1",
+    "mobilePhone": "(80) 100 000 01",
+    "email": "email 1",
+    "bDay": 0,
+    "bMonth": 0,
+    "bYear": 0
+  }
+]
