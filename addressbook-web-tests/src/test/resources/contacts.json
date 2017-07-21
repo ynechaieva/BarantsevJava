@@ -7,7 +7,8 @@
     "email": "email0@test.com",
     "bDay": 0,
     "bMonth": 0,
-    "bYear": 0
+    "bYear": 0,
+    "group": "[none]"
   },
   {
     "firstName": "first name 1",
@@ -17,6 +18,7 @@
     "email": "email1@test.com",
     "bDay": 0,
     "bMonth": 0,
-    "bYear": 0
+    "bYear": 0,
+    "group": "[none]"
   }
 ]

@@ -40,9 +40,9 @@ public class ContactDataGenerator {
   private List<ContactData> generateContacts(int count ) {
     List<ContactData> contacts = new ArrayList<ContactData>();
     for( int i = 0; i < count; i++ ) {
-      contacts.add(new ContactData().withFirstName(String.format("first name %s", i))
-              .withhLastName(String.format("last name %s", i)).withAddress(String.format("address %s", i)).withEmail(String.format("email%s@test.com", i))
-              .withMobilePhone(String.format("(80) %s00 000 0%s", i, i)));
+      contacts.add(new ContactData().withFirstName(String.format("first name %s", i)).withhLastName(String.format("last name %s", i))
+              .withAddress(String.format("address %s", i)).withEmail(String.format("email%s@test.com", i)).withMobilePhone(String.format("(80) %s00 000 0%s", i, i))
+              .withGroup("[none]"));
     }
     return contacts;
   }

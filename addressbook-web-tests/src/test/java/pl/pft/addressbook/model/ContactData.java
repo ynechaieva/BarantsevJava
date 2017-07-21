@@ -45,7 +45,9 @@ public class ContactData {
   private int bMonth;
   @Expose
   private int bYear;
+  @Expose
   private String group;
+  @Expose
   private File photo;
 
   public File getPhoto() {

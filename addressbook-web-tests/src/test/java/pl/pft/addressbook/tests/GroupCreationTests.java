@@ -9,7 +9,6 @@ import pl.pft.addressbook.model.GroupData;
 import pl.pft.addressbook.model.Groups;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
