@@ -14,11 +14,11 @@ public class ContactPhoneTests extends TestBase {
   public void ensurePreconditions() {
     if(app.db().contacts().size() == 0){
       app.goTo().HomePage();
-      app.contact().create(new ContactData().withFirstName("tmp").withhLastName("tmp").withEmail("tmp@email.address").withGroup("[none]").withHomePhone("+7 (111)").withMiddleName("222-22").withMobilePhone("333 33 46"), true);
+      app.contact().create(new ContactData().withFirstName("tmp").withhLastName("tmp").withEmail("tmp@email.address").withHomePhone("+7 (111)").withMiddleName("222-22").withMobilePhone("333 33 46"), true);
     }
   }
 
-  @Test
+  @Test(enabled = false)
   public void testContactPhones() {
     app.goTo().HomePage();
     ContactData contact = app.contact().all().iterator().next();

@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.Select;
 import pl.pft.addressbook.model.ContactData;
 import pl.pft.addressbook.model.Contacts;
 import java.util.List;
-import java.util.TreeSet;
 
 
 public class ContactHelper extends HelperBase{
@@ -44,7 +43,10 @@ public class ContactHelper extends HelperBase{
     //attach(By.name("photo"), contact.getPhoto());
 
     if(creation){
-      new Select(wd.findElement(By.name("new_group"))).selectByValue(contact.getGroup());
+      if(contact.getGroups().size() > 0) {
+        Assert.assertTrue(contact.getGroups().size() == 1);
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contact.getGroups().iterator().next().getName());
+      }
     } else{
       Assert.assertFalse(isElementPresent(By.name("new_group")) );
     }
@@ -133,7 +135,6 @@ public class ContactHelper extends HelperBase{
   public ContactData infoFromEditForm(ContactData contact) {
     initContactModification(contact.getId());
     String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
-
     String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
     String home = wd.findElement(By.name("home")).getAttribute("value");
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
