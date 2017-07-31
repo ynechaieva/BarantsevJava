@@ -35,8 +35,7 @@ public class ContactModificationTests extends TestBase{
     assertThat(app.contact().count(), equalTo(beforeList.size()));
     Contacts afterList = app.db().contacts();
     assertThat(afterList, equalTo(beforeList.without(modifiedContact).withAdded(newcontact)));
-
+    verifyContactListInUI();
   }
-
 
 }

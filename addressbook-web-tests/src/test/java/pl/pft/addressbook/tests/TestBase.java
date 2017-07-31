@@ -5,6 +5,8 @@ import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import pl.pft.addressbook.appmanager.ApplicationManager;
+import pl.pft.addressbook.model.ContactData;
+import pl.pft.addressbook.model.Contacts;
 import pl.pft.addressbook.model.GroupData;
 import pl.pft.addressbook.model.Groups;
 
@@ -29,11 +31,26 @@ public class TestBase {
   }
 
   public void verifyGroupListInUI() {
-    Groups dbGroups = app.db().groups();
-    Groups uiGroups = app.group().all();
-    assertThat(uiGroups, equalTo(dbGroups.stream()
-            .map((g) -> new GroupData().withId(g.getId()).withName(g.getName()))
-            .collect(Collectors.toSet())));
+    if(Boolean.getBoolean("verifyUI")) {
+      Groups dbGroups = app.db().groups();
+      Groups uiGroups = app.group().all();
+      assertThat(uiGroups, equalTo(dbGroups.stream()
+              .map((g) -> new GroupData().withId(g.getId()).withName(g.getName()))
+              .collect(Collectors.toSet())));
+      System.out.println("verifyUI: DONE");
+    }
+  }
+
+  public void verifyContactListInUI() {
+    if(Boolean.getBoolean("verifyUI")) {
+      Contacts dbContacts = app.db().contacts();
+      Contacts uiContacts = app.contact().all();
+
+      assertThat(uiContacts, equalTo(dbContacts.stream()
+              .map((c) -> new ContactData().withId(c.getId()).withhLastName(c.getLastName()).withFirstName(c.getFirstName())
+                      .withAddress(c.getAddress())).collect(Collectors.toSet())));
+      System.out.println("verifyUI: DONE");
+    }
   }
 
 }

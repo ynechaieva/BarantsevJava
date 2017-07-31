@@ -117,12 +117,15 @@ public class ContactHelper extends HelperBase{
       int id = Integer.parseInt(tdElements.get(0).findElement(By.tagName("input")).getAttribute("value"));
       String lastname = tdElements.get(1).getText();
       String firstname = tdElements.get(2).getText();
-      String allPhones = tdElements.get(5).getText();
-      String allEmails = tdElements.get(4).getText();
       String address = tdElements.get(3).getText();
+      /*String allPhones = tdElements.get(5).getText();
+      String allEmails = tdElements.get(4).getText();
+
 
       contactCache.add(new ContactData().withId(id).withFirstName(firstname).withhLastName(lastname)
               .withAllPhones(allPhones).withAllEmails(allEmails).withAddress(address));
+              */
+      contactCache.add(new ContactData().withId(id).withFirstName(firstname).withhLastName(lastname).withAddress(address));
     }
     return new Contacts(contactCache);
   }
