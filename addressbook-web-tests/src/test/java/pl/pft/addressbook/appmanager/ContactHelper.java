@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import pl.pft.addressbook.model.ContactData;
 import pl.pft.addressbook.model.Contacts;
 import java.util.List;
+import java.util.TreeSet;
 
 
 public class ContactHelper extends HelperBase{
@@ -27,16 +28,20 @@ public class ContactHelper extends HelperBase{
 
   public void fillContactForm(ContactData contact, boolean creation){
     type(By.name("firstname"), contact.getFirstName());
+    type(By.name("middlename"), contact.getMiddleName());
     type(By.name("lastname"), contact.getLastName());
-    type(By.name("email"), contact.getEmail());
-    type(By.name("email2"), contact.getEmail2());
-    type(By.name("email3"), contact.getEmail3());
+    type(By.name("nickname"), contact.getNickname());
+    type(By.name("title"), contact.getTitle());
+    type(By.name("company"), contact.getCompany());
+    type(By.name("address"), contact.getAddress());
     type(By.name("home"), contact.getHomePhone());
     type(By.name("mobile"), contact.getMobilePhone());
     type(By.name("work"), contact.getWorkPhone());
-    type(By.name("address"), contact.getAddress());
-    attach(By.name("photo"), contact.getPhoto());
-
+    type(By.name("fax"), contact.getFax());
+    type(By.name("email"), contact.getEmail());
+    type(By.name("email2"), contact.getEmail2());
+    type(By.name("email3"), contact.getEmail3());
+    //attach(By.name("photo"), contact.getPhoto());
 
     if(creation){
       new Select(wd.findElement(By.name("new_group"))).selectByValue(contact.getGroup());
@@ -125,6 +130,7 @@ public class ContactHelper extends HelperBase{
   public ContactData infoFromEditForm(ContactData contact) {
     initContactModification(contact.getId());
     String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+
     String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
     String home = wd.findElement(By.name("home")).getAttribute("value");
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");

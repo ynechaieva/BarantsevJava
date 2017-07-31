@@ -15,3 +15,9 @@ gradle-app.setting
 .idea/workspace.xml
 addressbook-web-tests/build/classes/test/pl/pft/addressbook/GroupCreationTests.class
 *.class
+*.idx
+addressbook-web-tests/build/test-results/test/binary/output.bin
+*.bin
+*.xml
+*.iml
+*.iml

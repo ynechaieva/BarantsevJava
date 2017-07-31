@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,20 +33,22 @@ public class ContactCreationTest extends TestBase {
       }
       Gson gson = new Gson();
       List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
-      return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
+      return contacts.stream().map( (c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
     }
   }
 
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact){
+
     app.goTo().HomePage();
-    Contacts beforeList = app.contact().all();
+    Contacts beforeList = app.db().contacts();
     File photo = new File("src/test/resources/raccoon.jpg");
     contact.withPhoto(photo);
     app.contact().create(contact, true);
 
     assertThat(app.contact().count(), equalTo(beforeList.size() + 1));
-    Contacts afterList = app.contact().all();
+    Contacts afterList = app.db().contacts();
+
     assertThat(afterList, equalTo(beforeList.withAdded(contact.withId(afterList.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
   }
 
