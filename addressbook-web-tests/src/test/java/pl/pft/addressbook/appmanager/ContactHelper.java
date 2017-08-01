@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import pl.pft.addressbook.model.ContactData;
 import pl.pft.addressbook.model.Contacts;
+import pl.pft.addressbook.model.GroupData;
+
 import java.util.List;
 
 
@@ -61,6 +63,10 @@ public class ContactHelper extends HelperBase{
     allertAccept();
   }
 
+  public void addSelectedContactToGroup() {
+    click(By.xpath(("//input[contains(@value, 'ADD_TO')]")));
+  }
+
   private void selectContactById(int id) {
 
     wd.findElement(By.id(String.valueOf(id))).click();
@@ -70,6 +76,10 @@ public class ContactHelper extends HelperBase{
 
     selectContactById(id);
     click(By.xpath(String.format("//a[contains(@href,'id=%s')]/img[contains(@title, 'EDIT')]", id)));
+  }
+
+  public void gotoContactsForGroupPage(int id) {
+    click(By.xpath(String.format("//a[contains(@href,'./?group=%s')]", id)));
   }
 
   public void submitContactModification() { click(By.name("update")); }
@@ -95,6 +105,17 @@ public class ContactHelper extends HelperBase{
     submitContactModification();
     contactCache = null;
     gotoContactHomePage();
+  }
+
+  public void addToGroup(ContactData contact, GroupData group) {
+    contact.inGroup(group);
+    selectContactById(contact.getId());
+    if(contact.getGroups().size() > 0) {
+      Assert.assertTrue(contact.getGroups().size() == 1);
+      new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
+    }
+    addSelectedContactToGroup();
+    gotoContactsForGroupPage(group.getId());
   }
 
   public boolean isThereAContact() {
@@ -149,4 +170,5 @@ public class ContactHelper extends HelperBase{
             .withEmail3(email3).withAddress(address);
 
   }
+
 }

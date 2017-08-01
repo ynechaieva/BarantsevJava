@@ -336,4 +336,9 @@ public class ContactData {
     groups.add(group);
     return this;
   }
+
+  public ContactData removeAllGroups() {
+    groups.clear();
+    return this;
+  }
 }
