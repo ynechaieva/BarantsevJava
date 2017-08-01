@@ -1,0 +1,13 @@
+{
+  "group": {
+    "name": "group test",
+    "header": "header test",
+    "footer": "footer test"
+  },
+ "contact": {
+   "firstName": "first name test",
+   "middleName": "middle name test",
+   "lastName": "last name test",
+   "group": "group test"
+ }
+}

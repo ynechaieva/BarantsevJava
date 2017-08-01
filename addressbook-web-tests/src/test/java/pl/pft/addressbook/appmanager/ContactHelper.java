@@ -67,6 +67,10 @@ public class ContactHelper extends HelperBase{
     click(By.xpath(("//input[contains(@value, 'ADD_TO')]")));
   }
 
+  public void removeSelectedContactFromGroup() {
+    click(By.xpath(("//input[contains(@value, 'REMOVE_FROM')]")));
+  }
+
   private void selectContactById(int id) {
 
     wd.findElement(By.id(String.valueOf(id))).click();
@@ -115,6 +119,18 @@ public class ContactHelper extends HelperBase{
       new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
     }
     addSelectedContactToGroup();
+    gotoContactsForGroupPage(group.getId());
+    //gotoContactHomePage();
+  }
+
+  public void removeFromGroup(ContactData contact, GroupData group) {
+    if(contact.getGroups().size() > 0) {
+      Assert.assertTrue(contact.getGroups().size() == 1);
+      new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+    }
+    selectContactById(contact.getId());
+    removeSelectedContactFromGroup();
+    contact.removeGroup(group);
     gotoContactsForGroupPage(group.getId());
   }
 
@@ -170,5 +186,4 @@ public class ContactHelper extends HelperBase{
             .withEmail3(email3).withAddress(address);
 
   }
-
 }
