@@ -3,11 +3,9 @@ package pl.pft.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pl.pft.addressbook.model.ContactData;
-import pl.pft.addressbook.model.Contacts;
 import pl.pft.addressbook.model.GroupData;
 import pl.pft.addressbook.model.Groups;
 
-import java.io.File;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

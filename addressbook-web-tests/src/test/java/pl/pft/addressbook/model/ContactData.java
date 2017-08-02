@@ -93,20 +93,19 @@ public class ContactData {
   private String homepage;
 
   @Expose
+ // @Column(columnDefinition = "TINYINT")
   @Transient
   private int bDay;
 
   @Expose
+  //@Column(columnDefinition = "VARCHAR")
   @Transient
   private int bMonth;
 
   @Expose
+  //@Column(columnDefinition = "VARCHAR")
   @Transient
   private int bYear;
-
-  /*@Expose
-  @Transient
-  private String group; */
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id")
