@@ -82,8 +82,8 @@ public class ContactHelper extends HelperBase{
     click(By.xpath(String.format("//a[contains(@href,'id=%s')]/img[contains(@title, 'EDIT')]", id)));
   }
 
-  public void gotoContactsForGroupPage(int id) {
-    click(By.xpath(String.format("//a[contains(@href,'./?group=%s')]", id)));
+  public void gotoContactsForGroupPage(String name) {
+    click(By.xpath(String.format("//a[contains(text(),'group page \"%s\"')]", name)));
   }
 
   public void submitContactModification() { click(By.name("update")); }
@@ -111,27 +111,20 @@ public class ContactHelper extends HelperBase{
     gotoContactHomePage();
   }
 
-  public void addToGroup(ContactData contact, GroupData group) {
-    contact.inGroup(group);
+  public void addContactToGroup(ContactData contact, GroupData group) {
     selectContactById(contact.getId());
-    if(contact.getGroups().size() > 0) {
-      Assert.assertTrue(contact.getGroups().size() == 1);
-      new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
-    }
+    //new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(group.getId()));
     addSelectedContactToGroup();
-    gotoContactsForGroupPage(group.getId());
-    //gotoContactHomePage();
+    gotoContactsForGroupPage(group.getName());
   }
 
   public void removeFromGroup(ContactData contact, GroupData group) {
-    if(contact.getGroups().size() > 0) {
-      Assert.assertTrue(contact.getGroups().size() == 1);
-      new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
-    }
+    new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(group.getId()));
     selectContactById(contact.getId());
     removeSelectedContactFromGroup();
     contact.removeGroup(group);
-    gotoContactsForGroupPage(group.getId());
+    gotoContactsForGroupPage(group.getName());
   }
 
   public boolean isThereAContact() {

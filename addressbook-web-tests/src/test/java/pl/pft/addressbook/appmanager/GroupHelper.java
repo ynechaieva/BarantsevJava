@@ -68,6 +68,18 @@ public class GroupHelper extends HelperBase{
     wd.findElement(By.cssSelector(String.format("input[value='%s']", id))).click();
   }
 
+  public int getDbIdForCreatedGroup(GroupData group) {
+
+    List<WebElement> elements = wd.findElements(By.cssSelector(String.format("input[title='Select (%s)']", group.getName())));
+    int max = 0;
+    for(WebElement elem : elements) {
+      if(Integer.parseInt(elem.getAttribute("value")) > max) {
+        max = Integer.parseInt(elem.getAttribute("value"));
+      }
+    }
+    return max;
+  }
+
   public boolean isThereAGroup() {
     return isElementPresent(By.name("selected[]"));
   }
