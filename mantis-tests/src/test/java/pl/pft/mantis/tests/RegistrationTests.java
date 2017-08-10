@@ -1,17 +1,16 @@
 package pl.pft.mantis.tests;
 
 
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pl.pft.mantis.model.MailMessage;
 import ru.lanwen.verbalregex.VerbalExpression;
-
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
 
 public class RegistrationTests extends TestBase {
 
@@ -21,16 +20,17 @@ public class RegistrationTests extends TestBase {
   }
 
   @Test
-  public void testBasicRegistration() throws IOException, MessagingException {
-
-    String user = "user1";
-    String email = "user1@localhost.localdomain";
-    //String password = "password";
+  public void testBasicRegistration() throws IOException, MessagingException, InterruptedException {
+    long now = System.currentTimeMillis();
+    String user = String.format("user%s", now);
+    String email = String.format("user%s@localhost.localdomain", now);
+    String password = "password";
     app.registration().start(user, email);
-    //List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
-    //String confirmationLink = findConfirmationLink(mailMessages, email);
-    //app.registration().finish(confirmationLink, password);
-    //assertTrue(app.newSession().login(user, password));
+    List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+    String confirmationLink = findConfirmationLink(mailMessages, email);
+    app.registration().finish(confirmationLink, user, password);
+    app.registration().loginThroughWeb(user, password);
+    Assert.assertTrue(app.registration().isLoggedOnWebAs(user));
   }
 
   private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
