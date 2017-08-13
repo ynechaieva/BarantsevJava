@@ -14,12 +14,29 @@ import java.util.List;
 
 public class RegistrationTests extends TestBase {
 
-  @BeforeMethod
+ // @BeforeMethod
   public void startMailServer() {
     app.mail().start();
   }
 
   @Test
+  public void testJamesRegistration() throws IOException, MessagingException, InterruptedException {
+    long now = System.currentTimeMillis();
+    String user = String.format("user%s", now);
+    String email = String.format("user%s@localhost.localdomain", now);
+    String password = "password";
+    app.james().createUser(user, password);
+
+    app.registration().start(user, email);
+    List<MailMessage> mailMessages = app.james().waitForMail(user, password, 100000);
+
+    String confirmationLink = findConfirmationLink(mailMessages, email);
+    app.registration().finish(confirmationLink, user, password);
+    app.registration().loginThroughWeb(user, password);
+    Assert.assertTrue(app.registration().isLoggedOnWebAs(user));
+  }
+
+  @Test(enabled = false)
   public void testBasicRegistration() throws IOException, MessagingException, InterruptedException {
     long now = System.currentTimeMillis();
     String user = String.format("user%s", now);
@@ -39,7 +56,7 @@ public class RegistrationTests extends TestBase {
     return regex.getText(mailMessage.text);
   }
 
-  @AfterMethod(alwaysRun = true)
+  //@AfterMethod(alwaysRun = true)
   public void stopMailServer() {
     app.mail().stop();
   }
