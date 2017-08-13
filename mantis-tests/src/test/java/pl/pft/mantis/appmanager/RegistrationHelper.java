@@ -25,7 +25,13 @@ public class RegistrationHelper extends HelperBase {
     type(By.id("password"), password);
     type(By.id("password-confirm"), password);
     click(By.cssSelector("button[type='submit']"));
-    //wd.wait(5000);
+  }
+
+  public void changePassword(String confirmationLink, String user, String password) throws InterruptedException {
+    wd.get(confirmationLink);
+    type(By.id("password"), password);
+    type(By.id("password-confirm"), password);
+    click(By.cssSelector("button[type='submit']"));
   }
 
   public void loginThroughWeb(String user, String password) {
@@ -42,6 +48,20 @@ public class RegistrationHelper extends HelperBase {
     if(hrefText.contains(username))
       return true;
     else return false;
+  }
+
+  public void resetUserPassword(String username) {
+    WebDriverWait wait = new WebDriverWait(wd, 5);
+    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Manage')]")));
+    click(By.xpath("//span[contains(text(),'Manage')]"));
+    click(By.xpath("//a[contains(text(),'Manage Users')]"));
+    click(By.linkText(username));
+    click(By.cssSelector("input[value='Reset Password']"));
+  }
+
+  public void logout(String username) {
+    click(By.xpath(String.format("//span[contains(text(), '%s')]", username)));
+    click(By.xpath("//a[contains(@href, 'logout_page.php')]"));
   }
 
 }

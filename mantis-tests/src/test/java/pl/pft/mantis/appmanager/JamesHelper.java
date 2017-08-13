@@ -51,7 +51,7 @@ public class JamesHelper {
     closeTelnetSession();
   }
 
-  private void initTelnetSession() {
+  public void initTelnetSession() {
     mailserver = app.getProperty("mailserver.host");
     int port = Integer.parseInt(app.getProperty("mailserver.port"));
     String login = app.getProperty("mailserver.adminlogin");
@@ -151,11 +151,13 @@ public class JamesHelper {
   }
 
   public void drainEmail(String username, String password) throws MessagingException {
+    initTelnetSession();
     Folder inbox = openInbox(username, password);
     for( Message msg: inbox.getMessages()) {
       msg.setFlag(Flags.Flag.DELETED, true);
     }
     closeFolder(inbox);
+    closeTelnetSession();
   }
 
   public static MailMessage toModelMail(Message m) {

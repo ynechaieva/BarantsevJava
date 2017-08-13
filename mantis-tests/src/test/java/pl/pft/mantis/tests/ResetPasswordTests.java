@@ -2,53 +2,52 @@ package pl.pft.mantis.tests;
 
 
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pl.pft.mantis.model.MailMessage;
 import ru.lanwen.verbalregex.VerbalExpression;
-
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-public class RegistrationTests extends TestBase {
+public class ResetPasswordTests extends  TestBase {
 
- // @BeforeMethod
-  public void startMailServer() {
-    app.mail().start();
-  }
+  @DataProvider
+  public Object[][] provide() throws InterruptedException, IOException, MessagingException {
+    Map<String, String> dictionary = new HashMap<String, String>();
 
-  @Test
-  public void testJamesRegistration() throws IOException, MessagingException, InterruptedException {
     long now = System.currentTimeMillis();
     String user = String.format("user%s", now);
     String email = String.format("user%s@localhost", now);
     String password = "password";
     app.james().createUser(user, password);
-
     app.registration().start(user, email);
     List<MailMessage> mailMessages = app.james().waitForMail(user, password, 100000);
-
     String confirmationLink = findConfirmationLink(mailMessages, email);
     app.registration().finish(confirmationLink, user, password);
-    app.registration().loginThroughWeb(user, password);
-    Assert.assertTrue(app.registration().isLoggedOnWebAs(user));
+    dictionary.put(user, password);
+    return new Object[][] {{dictionary}};
   }
 
-  @Test(enabled = false)
-  public void testBasicRegistration() throws IOException, MessagingException, InterruptedException {
-    long now = System.currentTimeMillis();
-    String user = String.format("user%s", now);
-    String email = String.format("user%s@localhost.localdomain", now);
+ // @Test(dataProvider = "provide")
+  @Test
+  public void testResetUserPassword() throws IOException, InterruptedException, MessagingException {
+    String username = "user1502653617378";
     String password = "password";
-    app.registration().start(user, email);
-    List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+    String email = String.format("%s@localhost", username);
+    app.james().drainEmail(username, password);
+    app.registration().loginThroughWeb("administrator", "root");
+    app.registration().resetUserPassword(username);
+    List<MailMessage> mailMessages = app.james().waitForMail(username, password, 100000);
     String confirmationLink = findConfirmationLink(mailMessages, email);
-    app.registration().finish(confirmationLink, user, password);
-    app.registration().loginThroughWeb(user, password);
-    Assert.assertTrue(app.registration().isLoggedOnWebAs(user));
+    String newpassword = username;
+    app.registration().changePassword(confirmationLink, username, newpassword);
+
+    app.registration().loginThroughWeb(username, newpassword);
+    Assert.assertTrue(app.registration().isLoggedOnWebAs(username));
   }
 
   private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
@@ -57,8 +56,4 @@ public class RegistrationTests extends TestBase {
     return regex.getText(mailMessage.text);
   }
 
- // @AfterMethod(alwaysRun = true)
-  public void stopMailServer() {
-    app.mail().stop();
-  }
 }
