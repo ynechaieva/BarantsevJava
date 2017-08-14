@@ -22,12 +22,12 @@ public class SoapTests extends  TestBase{
     }
   }
 
-  @Test
-  public void testCerateIssue() throws MalformedURLException, ServiceException, RemoteException{
+ // @Test(enabled = false)
+ /* public void testCerateIssue() throws MalformedURLException, ServiceException, RemoteException{
     Set<Project> projects = app.soap().getProjects();
     Issue issue = new Issue().withSummary("Test issue").withtDescription("test issue description")
             .withProject(projects.iterator().next());
     Issue created = app.soap().addIssue(issue);
     Assert.assertEquals(issue.getSummary(), created.getSummary());
-  }
+  }*/
 }
