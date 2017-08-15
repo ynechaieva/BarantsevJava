@@ -1,8 +1,6 @@
 package pl.pft.sandbox;
 
-/**
- * Created by ynech on 11/06/2017.
- */
+
 public class Point {
 
   public double x;
