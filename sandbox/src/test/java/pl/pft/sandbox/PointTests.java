@@ -3,9 +3,7 @@ package pl.pft.sandbox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-/**
- * Created by ynech on 13/06/2017.
- */
+
 public class PointTests {
 
   @Test
@@ -13,7 +11,6 @@ public class PointTests {
     Point pt1 = new Point(1.0, 2.0);
     Point pt2 = new Point(1.0, 2.0);
 
-    //assert pt1.distance(pt2) == 0.0;
     Assert.assertEquals(pt1.distance(pt2), 0.0);
   }
 
