@@ -40,10 +40,9 @@ public class ResetPasswordTests extends  TestBase {
   public void testResetUserPassword() throws IOException, InterruptedException, MessagingException {
     Users users = usersFromDB();
     UserData testuser = users.iterator().next();
-    /*String username = "user1502653617378";
-    String password = "password";
-    String email = String.format("%s@localhost", username);*/
-
+    if(testuser.getUsername().equals("administrator")) {
+      testuser = users.iterator().next();
+    }
     String username = testuser.getUsername();
     String password = "password";
     String email = testuser.getEmail();
