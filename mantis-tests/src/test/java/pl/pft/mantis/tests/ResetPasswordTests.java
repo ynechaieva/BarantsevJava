@@ -40,9 +40,6 @@ public class ResetPasswordTests extends  TestBase {
   public void testResetUserPassword() throws IOException, InterruptedException, MessagingException {
     Users users = usersFromDB();
     UserData testuser = users.iterator().next();
-    if(testuser.getUsername().equals("administrator")) {
-      testuser = users.iterator().next();
-    }
     String username = testuser.getUsername();
     String password = "password";
     String email = testuser.getEmail();
@@ -72,8 +69,10 @@ public class ResetPasswordTests extends  TestBase {
       ResultSet rs = st.executeQuery("select id, username, email, password from mantis_user_table");
       Users users = new Users();
       while (rs.next()) {
-        users.add(new UserData().withId(rs.getInt("id")).withUsername(rs.getString("username"))
-                .withEmail(rs.getString("email")).withPassword(rs.getString("password")));
+        if(!rs.getString("username").equals("administrator")) {
+          users.add(new UserData().withId(rs.getInt("id")).withUsername(rs.getString("username"))
+                  .withEmail(rs.getString("email")).withPassword(rs.getString("password")));
+        }
       }
       rs.close();
       st.close();
